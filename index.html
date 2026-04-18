@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+
+<html lang="ar" dir="rtl">
+
+<head>
+
+  <meta charset="UTF-8" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>منظومة مؤشرات الأداء للمبادرة</title>
+
+  <style>
+
+    :root{
+
+      --primary:#0f3d73;
+
+      --primary-2:#1d5ea8;
+
+      --gold:#c89b3c;
+
+      --bg:#f4f7fb;
+
+      --card:#ffffff;
+
+      --text:#1f2937;
+
+      --muted:#6b7280;
+
+      --border:#d9e2ef;
+
+      --green:#16a34a;
+
+      --yellow:#ca8a04;
+
+      --red:#dc2626;
+
+      --shadow:0 14px 36px rgba(15,61,115,.12);
+
+      --radius:20px;
+
+    }
+
+    *{box-sizing:border-box}
+
+    body{
+
+      margin:0;
+
+      font-family:"Tahoma","Arial",sans-serif;
+
+      background:linear-gradient(180deg,#edf3fb 0%,#f8fbff 100%);
+
+      color:var(--text);
+
+    }
+
+    .wrap{
+
+      width:min(1400px,95%);
+
+      margin:24px auto 40px;
+
+    }
+
+    .hero{
+
+      background:linear-gradient(135deg,var(--primary),var(--primary-2));
+
+      color:#fff;
+
+      padding:28px 24px;
+
+      border-radius:26px;
+
+      box-shadow:var(--shadow);
+
+      text-align:center;
+
+      margin-bottom:22px;
+
+      border:2px solid rgba(200,155,60,.18);
+
+    }
+
+    .hero h1{
+
+      margin:0 0 8px;
+
+      font-size:clamp(28px,4vw,42px);
+
+      line-height:1.5;
+
+    }
+
+    .hero p{
+
+      margin:0;
+
+      color:#eaf2ff;
+
+      font-size:15px;
+
+    }
+
+    .grid{
+
+      display:grid;
+
+      grid-template-columns:1.1fr .9fr;
+
+      gap:18px;
+
+    }
+
+    .card{
+
+      background:var(--card);
+
+      border:1px solid var(--border);
+
+      border-radius:var(--radius);
+
+      box-shadow:var(--shadow);
+
+      padding:18px;
+
+      margin-bottom:18px;
+
+    }
+
+    .card h2{
+
+      margin:0 0 14px;
+
+      color:var(--primary);
+
+      font-size:22px;
+
+    }
+
+    .section-title{
+
+      margin:0 0 10px;
+
+      color:var(--primary);
+
+      font-size:18px;
+
+    }
+
+    .sub{
+
+      color:var(--muted);
+
+      font-size:13px;
+
+      margin-bottom:12px;
+
+    }
+
+    .row{
+
+      display:grid;
+
+      grid-template-columns:repeat(4,1fr);
+
+      gap:10px;
+
+      margin-bottom:12px;
+
+    }
+
+    .field{
+
+      display:flex;
+
+      flex-direction:column;
+
+      gap:6px;
+
+    }
+
+    .field label{
+
+      font-weight:700;
+
+      font-size:13px;
+
+      color:var(--primary);
+
+    }
+
+    input, select, textarea{
+
+      width:100%;
+
+      border:1px solid var(--border);
+
+      border-radius:12px;
+
+      padding:11px 12px;
+
+      font:inherit;
+
+      background:#fff;
+
+      color:var(--text);
+
+    }
+
+    textarea{
+
+      min-height:95px;
+
+      resize:vertical;
+
+    }
+
+    .kpi-box{
+
+      border:1px solid var(--border);
+
+      border-radius:18px;
+
+      padding:14px;
+
+      margin-bottom:12px;
+
+      background:#fbfdff;
+
+    }
+
+    .kpi-box h3{
+
+      margin:0 0 10px;
+
+      font-size:17px;
+
+      color:var(--primary);
+
+    }
+
+    .kpi-grid{
+
+      display:grid;
+
+      grid-template-columns:2fr 1fr 1fr 1fr;
+
+      gap:8px;
+
+      align-items:end;
+
+    }
+
+    .btn{
+
+      width:100%;
+
+      border:none;
+
+      border-radius:14px;
+
+      padding:14px;
+
+      font:inherit;
+
+      font-weight:700;
+
+      cursor:pointer;
+
+      background:linear-gradient(135deg,var(--gold),#dfb86b);
+
+      color:#fff;
+
+      margin-top:8px;
+
+    }
+
+    .btn:hover{filter:brightness(1.03)}
+
+    .btn-secondary{
+
+      background:#e8eef8;
+
+      color:var(--primary);
+
+      margin-top:10px;
+
+    }
+
+    .stats{
+
+      display:grid;
+
+      grid-template-columns:repeat(3,1fr);
+
+      gap:12px;
+
+      margin-top:8px;
+
+    }
+
+    .stat{
+
+      background:#f8fbff;
+
+      border:1px solid var(--border);
+
+      border-radius:18px;
+
+      padding:16px;
+
+      text-align:center;
+
+    }
+
+    .stat .num{
+
+      font-size:28px;
+
+      font-weight:700;
+
+      color:var(--primary);
+
+      line-height:1.2;
+
+    }
+
+    .stat .lab{
+
+      margin-top:6px;
+
+      font-size:13px;
+
+      color:var(--muted);
+
+    }
+
+    .badge{
+
+      display:inline-block;
+
+      padding:6px 12px;
+
+      border-radius:999px;
+
+      font-size:13px;
+
+      font-weight:700;
+
+      color:#fff;
+
+    }
+
+    .green{background:var(--green)}
+
+    .yellow{background:var(--yellow)}
+
+    .red{background:var(--red)}
+
+    table{
+
+      width:100%;
+
+      border-collapse:collapse;
+
+      margin-top:12px;
+
+    }
+
+    th, td{
+
+      border:1px solid var(--border);
+
+      padding:10px;
+
+      text-align:center;
+
+      font-size:13px;
+
+    }
+
+    th{
+
+      background:#edf5ff;
+
+      color:var(--primary);
+
+    }
+
+    td.name{
+
+      text-align:right;
+
+      font-weight:700;
+
+    }
+
+    .report{
+
+      margin-top:14px;
+
+      background:#f9fbff;
+
+      border:1px solid var(--border);
+
+      border-radius:18px;
+
+      padding:14px;
+
+      line-height:1.9;
+
+      white-space:pre-line;
+
+    }
+
+    .footer-note{
+
+      color:var(--muted);
+
+      font-size:12px;
+
+      margin-top:10px;
+
+      text-align:center;
+
+    }
+
+    @media (max-width:1100px){
+
+      .grid{grid-template-columns:1fr}
+
+      .row{grid-template-columns:repeat(2,1fr)}
+
+    }
+
+    @media (max-width:700px){
+
+      .row,.stats,.kpi-grid{grid-template-columns:1fr}
+
+    }
+
+    @media print{
+
+      body{background:#fff}
+
+      .btn,.btn-secondary{display:none}
+
+      .card,.hero{box-shadow:none}
+
+      .wrap{width:100%;margin:0}
+
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <div class="wrap">
+
+    <section class="hero">
+
+      <h1>منظومة مؤشرات الأداء للمبادرة</h1>
+
+      <p>قياس كمي ونوعي لنتائج المبادرة وتحليل الأثر الفعلي والمقارنة بين المستهدف والمتحقق</p>
+
+    </section>
+
+    <div class="grid">
+
+      <div>
+
+        <section class="card">
+
+          <h2>بيانات المبادرة</h2>
+
+          <div class="row">
+
+            <div class="field">
+
+              <label>اسم المبادرة</label>
+
+              <input id="initiativeName" value="منظومة منصات كريمة بنت همام الذكية">
+
+            </div>
+
+            <div class="field">
+
+              <label>فترة القياس</label>
+
+              <select id="period">
+
+                <option>شهري</option>
+
+                <option>فصلي</option>
+
+                <option>نصف سنوي</option>
+
+                <option>سنوي</option>
+
+              </select>
+
+            </div>
+
+            <div class="field">
+
+              <label>عدد المستفيدين</label>
+
+              <input id="beneficiaries" type="number" min="0" value="350">
+
+            </div>
+
+            <div class="field">
+
+              <label>جهة القياس</label>
+
+              <input id="owner" value="فريق المتابعة والتقويم">
+
+            </div>
+
+          </div>
+
+        </section>
+
+        <section class="card">
+
+          <h2>إدخال المؤشرات</h2>
+
+          <div class="sub">أدخلي لكل مؤشر: المستهدف، المتحقق، والوزن. سيحسب النظام نسبة الإنجاز ومستوى الحكم تلقائيًا.</div>
+
+          <div id="kpiContainer"></div>
+
+          <button class="btn" onclick="analyzeKPIs()">تحليل مؤشرات الأداء وإصدار التقرير</button>
+
+          <button class="btn btn-secondary" onclick="resetValues()">إعادة تعيين القيم</button>
+
+        </section>
+
+      </div>
+
+      <div>
+
+        <section class="card">
+
+          <h2>النتائج الإجمالية</h2>
+
+          <div class="stats">
+
+            <div class="stat">
+
+              <div class="num" id="overallPercent">0%</div>
+
+              <div class="lab">متوسط الإنجاز العام</div>
+
+            </div>
+
+            <div class="stat">
+
+              <div class="num" id="kpiCount">12</div>
+
+              <div class="lab">عدد المؤشرات</div>
+
+            </div>
+
+            <div class="stat">
+
+              <div class="num" id="overallStatus">--</div>
+
+              <div class="lab">الحكم العام</div>
+
+            </div>
+
+          </div>
+
+          <table id="resultsTable">
+
+            <thead>
+
+              <tr>
+
+                <th>المؤشر</th>
+
+                <th>المستهدف</th>
+
+                <th>المتحقق</th>
+
+                <th>الوزن</th>
+
+                <th>نسبة الإنجاز</th>
+
+                <th>الحكم</th>
+
+              </tr>
+
+            </thead>
+
+            <tbody></tbody>
+
+          </table>
+
+          <div class="report" id="finalReport">لم يتم إصدار التقرير بعد.</div>
+
+          <div class="footer-note">مستويات الحكم: أخضر = 90% فأعلى | أصفر = 75% إلى 89% | أحمر = أقل من 75%</div>
+
+        </section>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+
+    const kpis = [
+
+      { group: "مؤشرات الكفاءة التشغيلية", name: "نسبة إنجاز الخطة التشغيلية", target: 90, actual: 88, weight: 10 },
+
+      { group: "مؤشرات الكفاءة التشغيلية", name: "معدل الالتزام بالجدول الزمني", target: 90, actual: 84, weight: 8 },
+
+      { group: "مؤشرات الاستخدام والتفاعل", name: "عدد المستفيدين الفعليين", target: 350, actual: 330, weight: 10 },
+
+      { group: "مؤشرات الاستخدام والتفاعل", name: "معدل الدخول والاستخدام الدوري", target: 85, actual: 81, weight: 8 },
+
+      { group: "مؤشرات جودة المخرجات", name: "معدل رضا المستفيدين عن الخدمات", target: 90, actual: 92, weight: 10 },
+
+      { group: "مؤشرات جودة المخرجات", name: "دقة التقارير والمعلومات", target: 95, actual: 90, weight: 8 },
+
+      { group: "مؤشرات الأثر التعليمي والإداري", name: "تحسن نتائج الأداء العام", target: 85, actual: 80, weight: 10 },
+
+      { group: "مؤشرات الأثر التعليمي والإداري", name: "زيادة سرعة الإنجاز", target: 80, actual: 76, weight: 8 },
+
+      { group: "مؤشرات الاستدامة والتطوير", name: "استمرارية التشغيل دون تعثر", target: 95, actual: 93, weight: 10 },
+
+      { group: "مؤشرات الاستدامة والتطوير", name: "قابلية التوسع والتطوير", target: 85, actual: 82, weight: 6 },
+
+      { group: "مؤشرات الاستدامة والتطوير", name: "تبني المبادرة مؤسسياً", target: 90, actual: 87, weight: 6 },
+
+      { group: "مؤشرات الاستدامة والتطوير", name: "نقل التجربة وتعميم الممارسات الناجحة", target: 80, actual: 72, weight: 6 }
+
+    ];
+
+    function renderKPIs() {
+
+      const container = document.getElementById("kpiContainer");
+
+      container.innerHTML = "";
+
+      let currentGroup = "";
+
+      kpis.forEach((kpi, index) => {
+
+        if (kpi.group !== currentGroup) {
+
+          currentGroup = kpi.group;
+
+          const title = document.createElement("h3");
+
+          title.className = "section-title";
+
+          title.textContent = currentGroup;
+
+          container.appendChild(title);
+
+        }
+
+        const box = document.createElement("div");
+
+        box.className = "kpi-box";
+
+        box.innerHTML = `
+
+          <h3>${index + 1}- ${kpi.name}</h3>
+
+          <div class="kpi-grid">
+
+            <div class="field">
+
+              <label>اسم المؤشر</label>
+
+              <input value="${kpi.name}" readonly>
+
+            </div>
+
+            <div class="field">
+
+              <label>المستهدف</label>
+
+              <input id="target-${index}" type="number" min="0" value="${kpi.target}">
+
+            </div>
+
+            <div class="field">
+
+              <label>المتحقق</label>
+
+              <input id="actual-${index}" type="number" min="0" value="${kpi.actual}">
+
+            </div>
+
+            <div class="field">
+
+              <label>الوزن</label>
+
+              <input id="weight-${index}" type="number" min="1" value="${kpi.weight}">
+
+            </div>
+
+          </div>
+
+        `;
+
+        container.appendChild(box);
+
+      });
+
+    }
+
+    function getStatus(percent) {
+
+      if (percent >= 90) return { text: "أخضر", className: "green" };
+
+      if (percent >= 75) return { text: "أصفر", className: "yellow" };
+
+      return { text: "أحمر", className: "red" };
+
+    }
+
+    function analyzeKPIs() {
+
+      const tbody = document.querySelector("#resultsTable tbody");
+
+      tbody.innerHTML = "";
+
+      let totalWeighted = 0;
+
+      let totalWeights = 0;
+
+      let greenCount = 0;
+
+      let redCount = 0;
+
+      kpis.forEach((kpi, index) => {
+
+        const target = Number(document.getElementById(`target-${index}`).value) || 0;
+
+        const actual = Number(document.getElementById(`actual-${index}`).value) || 0;
+
+        const weight = Number(document.getElementById(`weight-${index}`).value) || 1;
+
+        let percent = 0;
+
+        if (target > 0) {
+
+          percent = Math.min((actual / target) * 100, 100);
+
+        }
+
+        const status = getStatus(percent);
+
+        if (status.text === "أخضر") greenCount++;
+
+        if (status.text === "أحمر") redCount++;
+
+        totalWeighted += percent * weight;
+
+        totalWeights += weight;
+
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+
+          <td class="name">${kpi.name}</td>
+
+          <td>${target}</td>
+
+          <td>${actual}</td>
+
+          <td>${weight}</td>
+
+          <td>${percent.toFixed(1)}%</td>
+
+          <td><span class="badge ${status.className}">${status.text}</span></td>
+
+        `;
+
+        tbody.appendChild(row);
+
+      });
+
+      const overall = totalWeights > 0 ? (totalWeighted / totalWeights) : 0;
+
+      const overallStatus = getStatus(overall);
+
+      document.getElementById("overallPercent").textContent = `${overall.toFixed(1)}%`;
+
+      document.getElementById("overallStatus").innerHTML = `<span class="badge ${overallStatus.className}">${overallStatus.text}</span>`;
+
+      document.getElementById("kpiCount").textContent = kpis.length;
+
+      const initiativeName = document.getElementById("initiativeName").value;
+
+      const period = document.getElementById("period").value;
+
+      const beneficiaries = document.getElementById("beneficiaries").value;
+
+      const owner = document.getElementById("owner").value;
+
+      let recommendation = "يوصى بالاستمرار في التنفيذ مع المحافظة على الأداء الحالي.";
+
+      if (overall < 90 && overall >= 75) {
+
+        recommendation = "يوصى بخطة تحسين مركزة لرفع المؤشرات الصفراء إلى المستوى الأخضر.";
+
+      }
+
+      if (overall < 75) {
+
+        recommendation = "يوصى بتدخل تطويري عاجل ومعالجة أسباب التعثر في المؤشرات الحمراء.";
+
+      }
+
+      document.getElementById("finalReport").textContent =
+
+`تقرير منظومة مؤشرات الأداء
+
+اسم المبادرة: ${initiativeName}
+
+فترة القياس: ${period}
+
+عدد المستفيدين: ${beneficiaries}
+
+جهة القياس: ${owner}
+
+متوسط الإنجاز العام: ${overall.toFixed(1)}%
+
+الحكم العام: ${overallStatus.text}
+
+عدد المؤشرات الخضراء: ${greenCount}
+
+عدد المؤشرات الحمراء: ${redCount}
+
+التحليل:
+
+تعكس النتائج الحالية مستوى ${overallStatus.text === "أخضر" ? "مرتفعًا" : overallStatus.text === "أصفر" ? "متوسطًا يحتاج إلى تحسين" : "منخفضًا يحتاج إلى معالجة"} في تحقيق أهداف المبادرة، مع أهمية مقارنة المؤشرات دوريًا بين المستهدف والمتحقق لتحليل الأثر الفعلي ودعم اتخاذ القرار المبني على البيانات.
+
+التوصية:
+
+${recommendation}`;
+
+    }
+
+    function resetValues() {
+
+      renderKPIs();
+
+      document.getElementById("overallPercent").textContent = "0%";
+
+      document.getElementById("overallStatus").textContent = "--";
+
+      document.querySelector("#resultsTable tbody").innerHTML = "";
+
+      document.getElementById("finalReport").textContent = "لم يتم إصدار التقرير بعد.";
+
+    }
+
+    renderKPIs();
+
+    analyzeKPIs();
+
+  </script>
+
+</body>
+
+</html>
